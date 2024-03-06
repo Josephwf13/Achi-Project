@@ -1,5 +1,5 @@
 
-#count of how many pieces each player has
+#count of how many pieces each player has colletively
 piece_count = 8
 
 #tracking the values of each section of the board 
@@ -20,7 +20,8 @@ def display_board(b):
     print("[" + str(board[6]) + "]-[" + str(board[7]) + "]-[" + str(board[8]) + "]")
 
 
-#adds the piece to the board and removes it from the open spots list       
+#adds the piece to the board and removes it from the open spots list, it uses the parameters that I called choice and symbol. 
+# Choice is determined in the player_move function and the symbol is either "X" or  "O" depending on the player
 def add_piece(choice, symbol):
     for i in (open_spots):
         global piece_count
@@ -31,13 +32,14 @@ def add_piece(choice, symbol):
     #print(piece_count)
 
 #chooses the players next move, and doesn't allow for spots that are already full
+#The symbol parameter is filled with the either an "X" or and "O" and the player is either 1 or 2 depending on the player
 def player_move(symbol, player):
     player_choice = int(input("\nChoose a Space Player " + str(player) + "\n"))
     while not player_choice in open_spots:
         player1_choice = int(input("\nChoose an Available Space Player " + str(player) + "\n"))
     add_piece(player_choice, symbol)
 
-
+#this code checks to see if the move created three in a row anywhere on the board
 def check_win():
     global game_won
     if board[0] == board[1] and board[1] == board[2]:
