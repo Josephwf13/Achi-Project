@@ -1,1 +1,91 @@
 
+#count of how many pieces each player has
+piece_count = 8
+
+#tracking the values of each section of the board 
+board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+#keeps track of what spaces on the board are available
+open_spots = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+#used to stop the game once it is set to true
+game_won = False
+
+#tracks the possible moveable pieces, currently empty until the game comes to a tie
+moveable_pieces = []
+
+#used later on to track the last remaining spot when the game comes to a tie
+last_spot = False
+
+#displays board
+def display_board(b):
+    print("[" + str(board[0]) + "]-[" + str(board[1]) + "]-[" + str(board[2]) + "]")
+    print("|  \\ | /  |")
+    print("[" + str(board[3]) + "]-[" + str(board[4]) + "]-[" + str(board[5]) + "]")
+    print("|  / | \\  |")
+    print("[" + str(board[6]) + "]-[" + str(board[7]) + "]-[" + str(board[8]) + "]")
+
+
+#adds the piece to the board and removes it from the open spots list       
+def add_piece(choice, symbol):
+    for i in (open_spots):
+        global piece_count
+        if choice == i:
+            board[choice - 1] = symbol
+            open_spots.remove(choice)
+            piece_count -= 1
+    #print(piece_count)
+
+#chooses the players next move, and doesn't allow for spots that are already full
+def player_move(symbol, player):
+    player_choice = int(input("\nChoose a Space Player " + str(player) + "\n"))
+    while not player_choice in open_spots:
+        player1_choice = int(input("\nChoose an Available Space Player " + str(player) + "\n"))
+    add_piece(player_choice, symbol)
+
+
+def check_win():
+    global game_won
+    if board[0] == board[1] and board[1] == board[2]:
+        game_won = True
+    if board[3] == board[4] and board[4] == board[5]:
+        game_won = True
+    if board[6] == board[7] and board[7] == board[8]:
+        game_won = True
+    if board[0] == board[3] and board[3] == board[6]:
+        game_won = True
+    if board[1] == board[4] and board[4] == board[7]:
+        game_won = True
+    if board[2] == board[5] and board[5] == board[8]:
+        game_won = True
+    if board[0] == board[4] and board[4] == board[8]:
+        game_won = True
+    if board[2] == board[4] and board[4] == board[6]:
+        game_won = True
+
+#--------------------------------------------------------------------------------Achi Code Starts Here
+
+
+
+
+
+#this function runs the game as a whole
+def run_game():
+    while piece_count > 0 and game_won == False:
+        display_board(board)
+        player_move("X", 1)
+        print("-------------------------\n")
+        check_win()
+        if game_won == True:
+            print("\nPlayer 1 wins")
+        else: 
+            display_board(board)
+            player_move("O", 2)
+            check_win()
+            if game_won == True:
+                print("\nPlayer 2 wins")
+    display_board(board)
+
+
+run_game()
+
